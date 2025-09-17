@@ -1,0 +1,108 @@
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #8789b8, #5659ad); /* light purple gradient */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+
+.container {
+  width: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+}
+
+h1 {
+  margin-bottom: 16px;
+  color: #3A3B93;
+}
+
+.chat-window {
+  flex: 1;
+  height: 250px;
+  background: linear-gradient(145deg, #b6b7df, #b6b7df);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  max-width: 80%;
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  word-wrap: break-word;
+  transition: all 0.2s ease;
+}
+
+.message.encrypted {
+  background: #3A3B93;
+  color: white;
+  align-self: flex-end;
+  box-shadow: 0 2px 6px rgba(125, 91, 166, 0.4);
+}
+
+.message.decrypted {
+  background: #f8f5fa;
+  color: #333;
+  align-self: flex-start;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+textarea, input {
+  width: 100%;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  resize: none;
+}
+
+textarea {
+  height: 60px;
+  background: #f9f5fc;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  background: linear-gradient(135deg, #5e61af, #3A3B93);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #484cb6, #121370);
+  transform: translateY(-2px);
+}
+

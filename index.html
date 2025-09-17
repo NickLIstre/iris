@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iris - Encrypted Messenger</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Firebase -->
+<script type="module">
+  // Import Firebase SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  import { getAuth, signInAnonymously } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+  // TODO: Replace with your Firebase config
+  const firebaseConfig = {
+  apiKey: "AIzaSyAS0Nnu5i0GvGaMWuK1KOdDNeflBjbXErg",
+  authDomain: "iris-ac000.firebaseapp.com",
+  projectId: "iris-ac000",
+  storageBucket: "iris-ac000.firebasestorage.app",
+  messagingSenderId: "532826474604",
+  appId: "1:532826474604:web:53e896ad3a3c9542e0f049"
+};
+
+  // Init
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth();
+
+  // Sign in anonymously
+  signInAnonymously(auth)
+    .then(() => console.log("Signed in"))
+    .catch(err => console.error(err));
+
+  // Expose db for script.js
+  window.db = db;
+  window.firestoreUtils = { collection, addDoc, query, orderBy, onSnapshot };
+</script>
+
+  <div class="container">
+    <header>
+    <h1>Iris</h1>
+    </header>
+    <div class="chat-window" id="chatWindow"></div>
+
+    <textarea id="message" placeholder="Type your secret message..."></textarea>
+    <input type="password" id="password" placeholder="Enter password">
+
+    <div class="buttons">
+      <button id="encryptBtn">Encrypt</button>
+      <button id="decryptBtn">Decrypt</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
