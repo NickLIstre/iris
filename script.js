@@ -1,4 +1,12 @@
-// Utility: derive a crypto key from a password
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+const auth = getAuth(app);
+signInAnonymously(auth)
+  .then(() => console.log("Signed in anonymously"))
+  .catch((err) => console.error("Auth error", err));
+
+
+// Derive a key from password
 async function getKey(password, salt) {
   const enc = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
@@ -57,7 +65,7 @@ async function decryptMessage(ciphertextB64, password) {
   }
 }
 
-// UI: Add message bubble
+// Adds message bubble
 function addMessage(text, type) {
   const chat = document.getElementById("chatWindow");
   const msg = document.createElement("div");

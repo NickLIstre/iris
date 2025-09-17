@@ -1,7 +1,7 @@
 
 body {
   font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #8789b8, #5659ad); /* light purple gradient */
+  background: linear-gradient(135deg, #8789b8, #5659ad);
   display: flex;
   justify-content: center;
   align-items: center;
