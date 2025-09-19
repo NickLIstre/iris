@@ -1,11 +1,3 @@
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
-const auth = getAuth(app);
-signInAnonymously(auth)
-  .then(() => console.log("Signed in anonymously"))
-  .catch((err) => console.error("Auth error", err));
-
-
 // Derive a key from password
 async function getKey(password, salt) {
   const enc = new TextEncoder();
