@@ -1,14 +1,31 @@
+// Check Web Crypto availability and provide fallback
+const subtle = (globalThis.crypto && (globalThis.crypto.subtle || globalThis.crypto.webkitSubtle)) || null;
+if (!subtle) {
+  console.error('Web Crypto API (SubtleCrypto) not available in this environment.');
+  try {
+    const chat = document.getElementById && document.getElementById('chatWindow');
+    if (chat) {
+      const msg = document.createElement('div');
+      msg.className = 'message decrypted';
+      msg.textContent = '⚠️ Your browser does not support the Web Crypto API required for encryption/decryption.';
+      chat.appendChild(msg);
+    }
+  } catch (e) {
+  }
+}
+
 // Derive a key from password
 async function getKey(password, salt) {
+  if (!subtle) throw new Error('Web Crypto SubtleCrypto is not available');
   const enc = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
+  const keyMaterial = await subtle.importKey(
     "raw",
     enc.encode(password),
     { name: "PBKDF2" },
     false,
     ["deriveKey"]
   );
-  return crypto.subtle.deriveKey(
+  return subtle.deriveKey(
     {
       name: "PBKDF2",
       salt: salt,
@@ -27,8 +44,9 @@ async function encryptMessage(message, password) {
   const enc = new TextEncoder();
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
+  if (!subtle) throw new Error('Web Crypto SubtleCrypto is not available');
   const key = await getKey(password, salt);
-  const ciphertext = await crypto.subtle.encrypt(
+  const ciphertext = await subtle.encrypt(
     { name: "AES-GCM", iv: iv },
     key,
     enc.encode(message)
@@ -40,12 +58,13 @@ async function encryptMessage(message, password) {
 // Decrypt message
 async function decryptMessage(ciphertextB64, password) {
   try {
+    if (!subtle) throw new Error('Web Crypto SubtleCrypto is not available');
     const data = Uint8Array.from(atob(ciphertextB64), c => c.charCodeAt(0));
     const salt = data.slice(0, 16);
     const iv = data.slice(16, 28);
     const ciphertext = data.slice(28);
     const key = await getKey(password, salt);
-    const decrypted = await crypto.subtle.decrypt(
+    const decrypted = await subtle.decrypt(
       { name: "AES-GCM", iv: iv },
       key,
       ciphertext
@@ -64,7 +83,7 @@ function addMessage(text, type) {
   msg.className = "message " + type;
   msg.textContent = text;
   chat.appendChild(msg);
-  chat.scrollTop = chat.scrollHeight; // auto-scroll to bottom
+  chat.scrollTop = chat.scrollHeight;
 }
 
 // Encrypt button handler
